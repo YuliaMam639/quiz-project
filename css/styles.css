@@ -1,0 +1,227 @@
+body { 
+    font-family: Arial, sans-serif; 
+    background-color: #1a202c; 
+    color: white; 
+    line-height: 1.6; 
+    margin: 0; 
+    padding: 0;
+}
+
+.container { 
+    max-width: 800px; 
+    margin: 0 auto; 
+    padding: 20px; 
+}
+
+h1 { 
+    text-align: center; 
+    color: #fbbf24; 
+    margin-bottom: 10px; 
+}
+
+.question { 
+    background-color: #2d3748; 
+    padding: 15px; 
+    margin-bottom: 15px; 
+    border-radius: 8px; 
+    position: relative;
+    overflow: hidden; /* מונע התפשטות התמונה מחוץ לתחום */
+}
+
+.question img {
+    width: 700px;          /* הגדרת רוחב התמונה */
+    height: 200px;         /* הגדרת גובה התמונה */
+    object-fit: cover;     /* שמירה על יחס הגובה והרוחב המקורי וחתיכת חלקים עודפים */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: block;        /* מיישר את התמונה למרכז התוכן */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.question h2 {
+    margin: 0 0 10px 0; 
+    font-size: 1.2em; 
+}
+
+.question p {
+    margin: 0 0 15px 0; 
+}
+
+.highlight { 
+    font-weight: bold;
+    color: #fbbf24;
+}
+
+.options { 
+    display: grid; 
+    gap: 10px; 
+}
+
+button { 
+    background-color: #3b82f6; 
+    color: white; 
+    border: none; 
+    padding: 10px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+    font-size: 1em;
+}
+
+button:hover { 
+    background-color: #2563eb; 
+}
+
+button.selected { 
+    background-color: #1d4ed8; 
+}
+
+button.correct { 
+    background-color: #f59e0b; 
+    color: black;
+}
+
+button.incorrect { 
+    background-color: #ef4444; 
+}
+
+#result { 
+    text-align: center; 
+    padding: 20px; 
+    position: relative; /* חשוב עבור הצבת התמונה באלכסון */
+}
+
+#result img {
+    width: 300px;          /* הגדלת רוחב התמונה פי 2 */
+    height: auto;          /* שמירה על יחס גובה לרוחב */
+    margin-top: 20px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* הוספת הצללה לתמונה */
+    border-radius: 10px;   /* עיגול פינות התמונה */
+    transform: rotate(0deg); /* מיקום התמונה ללא סיבוב בתחילה */
+}
+
+#result img.show {
+    opacity: 1;
+    transform: rotate(30deg); /* סיבוב התמונה ב-30 מעלות */
+}
+
+#progress-bar { 
+    width: 100%; 
+    background-color: #4b5563; 
+    height: 20px; 
+    border-radius: 10px; 
+    overflow: hidden; 
+    margin-bottom: 15px; 
+}
+
+#progress-fill { 
+    height: 100%; 
+    background-color: #3b82f6; 
+    transition: width 0.5s ease-out; 
+}
+
+#prev-button, #next-button, #see-answers-button { 
+    display: inline-block; 
+    margin-top: 15px; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    font-size: 1em;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+#prev-button { 
+    background-color: #fbbf24; 
+    color: black; 
+    margin-right: 10px; 
+}
+
+#prev-button:hover { 
+    background-color: #e9a23a; 
+}
+
+#next-button { 
+    background-color: #3b82f6; 
+    color: white; 
+}
+
+#next-button:hover { 
+    background-color: #2563eb; 
+}
+
+#see-answers-button { 
+    background-color: #10b981; 
+    color: white; 
+    margin-top: 20px;
+}
+
+#see-answers-button:hover { 
+    background-color: #059669; 
+}
+
+#prev-button[disabled], #next-button[disabled] { 
+    background-color: #4b5563; 
+    cursor: not-allowed; 
+}
+
+#answers { 
+    max-width: 800px; 
+    margin: 20px auto; 
+    padding: 20px; 
+    background-color: #2d3748; 
+    border-radius: 8px; 
+}
+
+#answers .question { 
+    margin-bottom: 20px; 
+}
+
+/* סגנון לאנימציית קונפטי (אופציונלי) */
+.confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #fbbf24;
+    opacity: 0.7;
+    animation: fall 3s infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+@media (max-width: 720px) {
+    .question img {
+        width: 100%;
+        height: auto; /* שמירה על יחס גובה/רוחב המקורי */
+    }
+    .container {
+        padding: 10px;
+    }
+    button {
+        font-size: 0.9em;
+        padding: 8px;
+    }
+    #result img {
+        width: 200px; /* התאמה גודל לתצוגה במכשירים קטנים */
+    }
+}

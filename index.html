@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>איזה אנליסט אתה?</title>
+    <!-- כולל את Font Awesome לאייקונים -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css"> <!-- קישור ל-CSS החיצוני -->
+</head>
+<body>
+    <div class="container">
+        <h1>איזה אנליסט אתה?</h1>
+        <div id="progress-bar"><div id="progress-fill"></div></div>
+        <div id="quiz"></div>
+        <div id="navigation">
+            <button id="prev-button" onclick="prevQuestion()" disabled><i class="fas fa-arrow-right"></i> קודם</button>
+            <button id="next-button" onclick="nextQuestion()"><i class="fas fa-arrow-left"></i> הבא</button>
+        </div>
+        <div id="result" style="display:none;">
+            <h2>התוצאות שלך</h2>
+            <p id="score"></p>
+            <p id="analyst-type"></p>
+            <!-- תמונת הגביע תוצג כאן אם הציון >=90 -->
+            <img id="trophy-image" src="images/trophy.png" alt="גביע">
+            <button id="see-answers-button" onclick="showAnswers()"><i class="fas fa-eye"></i> ראה תשובות</button>
+        </div>
+        <div id="answers" style="display:none;">
+            <div id="answers-quiz"></div>
+        </div>
+    </div>
+
+    <!-- אלמנט קול חגיגי בלבד -->
+    <audio id="celebration-sound" src="sounds/applause-01.mp3"></audio>
+
+    <!-- אנימציית קונפטי (אופציונלי) -->
+    <div class="confetti" id="confetti-container"></div>
+
+    <script src="js/script.js"></script> <!-- קישור ל-JS הראשי -->
+</body>
+</html>
+
