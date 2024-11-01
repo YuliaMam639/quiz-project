@@ -11,7 +11,9 @@
 <body>
     <div class="container">
         <h1>איזה אנליסט אתה?</h1>
-        <div id="progress-bar"><div id="progress-fill"></div></div>
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
         <div id="quiz"></div>
         <div id="navigation">
             <button id="prev-button" onclick="prevQuestion()" disabled><i class="fas fa-arrow-right"></i> קודם</button>
@@ -21,7 +23,7 @@
             <h2>התוצאות שלך</h2>
             <p id="score"></p>
             <p id="analyst-type"></p>
-            <!-- תמונת הגביע תוצג כאן אם הציון >=90 -->
+            <!-- תמונת הגביע תוצג כאן אם הציון >=50 -->
             <img id="trophy-image" src="images/trophy.png" alt="גביע">
             <button id="see-answers-button" onclick="showAnswers()"><i class="fas fa-eye"></i> ראה תשובות</button>
         </div>
@@ -39,4 +41,3 @@
     <script src="js/script.js"></script> <!-- קישור ל-JS הראשי -->
 </body>
 </html>
-
