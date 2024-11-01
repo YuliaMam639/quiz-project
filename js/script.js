@@ -1,7 +1,7 @@
 const questions = [
     {
         text: "מהי מטרת מבחן A/B?",
-        image: "images/1ab-test.jpg", // נתיב מותאם
+        image: "images/1ab-test.jpg",
         options: [
             { text: "לבדוק האם קיים הבדל מובהק בין שני גרסאות של משתנה", score: 10 },
             { text: "לקבוע את הגורמים המשפיעים ביותר על משתנה תלוי", score: 0 },
@@ -33,7 +33,7 @@ const questions = [
         multipleAnswers: false
     },
     {
-        text: "השנה, 2024, שפת SQL מציינת תאריך עגול מאז פותחה לראשונה. כמה שנים עברו מאז פיתוח השפה?",
+        text: "השנה, 2024, שפת SQL מציינת תאריך עגול מאז הוצגה לראשונה. כמה שנים עברו מאז שהוצגה השפה?",
         image: "images/4sql.jpg",
         options: [
             { text: "30 שנה", score: 0 },
@@ -155,31 +155,30 @@ function displayQuestion() {
     `;
     
     question.options.forEach((option, index) => {
-        // בדיקה אם במצב צפייה בתשובות
         if (reviewMode) {
-            // בדיקת אם התשובה הנוכחית היא התשובה הנכונה
             const isCorrect = option.score > 0;
-            // בדיקת אם המשתמש בחר את התשובה הזו
-            const isSelected = selectedAnswers[currentQuestion] === index || 
-                               (Array.isArray(selectedAnswers[currentQuestion]) && selectedAnswers[currentQuestion].includes(index));
-            // קביעת המחלקות הנכונות לתשובות
+            const isSelected = Array.isArray(selectedAnswers[currentQuestion]) 
+                                ? selectedAnswers[currentQuestion].includes(index) 
+                                : selectedAnswers[currentQuestion] === index;
             let buttonClass = "";
-            if (isCorrect) {
-                buttonClass += " correct";
-            }
-            if (isSelected && !isCorrect) {
-                buttonClass += " incorrect";
-            }
-            // הוספת אייקונים
             let icon = "";
+
             if (isCorrect) {
+                buttonClass = "correct";
                 icon = '<i class="fas fa-check"></i>';
-            } else if (isSelected && !isCorrect) {
+            } else if (isSelected && option.score <= 0) {
+                buttonClass = "incorrect";
                 icon = '<i class="fas fa-times"></i>';
+            } else {
+                // תשובות שלא נבחרו ואינן נכונות לא יקבלו סימון
+                icon = '';
             }
 
+            // הוספת הניקוד לתשובה עם שינוי פורמט למינוס אחרי המספר
+            let scoreText = option.score < 0 ? ` (${Math.abs(option.score)}- נק')` : ` (${option.score} נק')`;
+
             html += `
-                <button class="${buttonClass.trim()}">${icon} ${option.text}</button>
+                <button class="${buttonClass}">${icon} ${option.text}${scoreText}</button>
             `;
         } else {
             // מצב משחק רגיל
@@ -317,7 +316,7 @@ function showResults() {
             }
         } else {
             if (answer !== null) {
-                score += question.options[answer].score;
+                score += questions[index].options[answer].score;
             }
         }
     });
@@ -345,16 +344,12 @@ function showResults() {
         setTimeout(() => {
             trophyImage.classList.add('show'); // הוספת מחלקת show לאנימציה
         }, 100); // זמן קצר לאחר הצגת התמונה כדי לאפשר אנימציה
-    } else if (score >= 70) {
-        analystType = "אנליסט מומחה";
+    } else if (score >= 50 && score < 90) { // עדכון לקטגוריה החדשה
+        analystType = "אנליסט מתפתח"; // שם חדש לקטגוריה
         trophyImage.style.display = 'none'; // הסתרת תמונת הגביע
         trophyImage.classList.remove('show'); // הסרת מחלקת show
-    } else if (score >= 50) {
-        analystType = "אנליסט מתקדם";
-        trophyImage.style.display = 'none'; // הסתרת תמונת הגביע
-        trophyImage.classList.remove('show'); // הסרת מחלקת show
-    } else {
-        analystType = "אנליסט מתחיל";
+    } else { // נמוך מ-50
+        analystType = "אנליסט מתחיל"; // שם מותאם
         trophyImage.style.display = 'none'; // הסתרת תמונת הגביע
         trophyImage.classList.remove('show'); // הסרת מחלקת show
     }
@@ -381,7 +376,7 @@ function showAnswers() {
     navigationContainer.style.display = 'none';
     answersContainer.style.display = 'block';
 
-    // הצגת כל השאלות עם התשובות
+    // הצגת כל השאלות עם התשובות כולל הניקוד
     let html = '';
     questions.forEach((question, qIndex) => {
         html += `
@@ -397,22 +392,24 @@ function showAnswers() {
                                 ? selectedAnswers[qIndex].includes(oIndex) 
                                 : selectedAnswers[qIndex] === oIndex;
             let buttonClass = "";
-            if (isCorrect) {
-                buttonClass += " correct";
-            }
-            if (isSelected && !isCorrect) {
-                buttonClass += " incorrect";
-            }
-            // הוספת אייקונים
             let icon = "";
+
             if (isCorrect) {
+                buttonClass = "correct";
                 icon = '<i class="fas fa-check"></i>';
-            } else if (isSelected && !isCorrect) {
+            } else if (isSelected && option.score <= 0) {
+                buttonClass = "incorrect";
                 icon = '<i class="fas fa-times"></i>';
+            } else {
+                // תשובות שלא נבחרו ואינן נכונות לא יקבלו סימון
+                icon = '';
             }
 
+            // הוספת הניקוד לתשובה עם שינוי פורמט למינוס אחרי המספר
+            let scoreText = option.score < 0 ? ` (${Math.abs(option.score)}- נק')` : ` (${option.score} נק')`;
+
             html += `
-                <button class="${buttonClass.trim()}">${icon} ${option.text}</button>
+                <button class="${buttonClass}">${icon} ${option.text}${scoreText}</button>
             `;
         });
         html += `
